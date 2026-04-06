@@ -23,7 +23,7 @@
 
 
 
-body{
+body {
     background-image: url('../img/pexels-jayoke-851555.jpg');
     background-position: center;
     background-repeat: no-repeat;
@@ -34,7 +34,7 @@ body{
     justify-content: center;
     height: 100vh;
     width: 95vh;
-    margin: 2em;  
+    margin: 2em;
 }
 
 .login-card{
@@ -43,10 +43,10 @@ body{
     border-radius: 1em;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     width: 700px;
-  
+
 }
 
-input{
+input {
     width: 100%;
     padding: .8em;
     margin-bottom: 1em;
@@ -62,7 +62,7 @@ input{
    color: var(--colorSombras);
 }
 
-.boton{
+.boton {
     width: 100%;
     background-color: var(--colorPrimario);
     color: #000000;
@@ -74,7 +74,7 @@ input{
     font-weight: 500;
 }
 
-.boton:hover{
+.boton:hover {
     background-color: var(--colorSombras);
     color: #fff;
     transition: 0.4s ease;
