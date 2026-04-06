@@ -1,0 +1,22 @@
+:root {
+    --colorPrimario: #D5B795;
+    --colorSecundario: #D5B795;
+    --colorTerciario: #5E5E3C;
+    --colorSombras: #A87D5B;
+    --colorTitulos: #D97652;
+    --ColorParrafos: #403B39;
+    --colorFondo: #EFE0BF;
+    --colorBordes: #8C7549;
+    --zIndexNormal: 1;
+    --zIndexToolTip: 10;
+    --zIndexFixed: 100;
+    --zIndexModal: 1000;
+    --zindexPopUp: 10000;
+}
+
+/* SELECTOR UNIVERSAL */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
