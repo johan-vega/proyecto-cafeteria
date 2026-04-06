@@ -37,7 +37,7 @@ body{
     margin: 2em;  
 }
 
-.contenedor{
+.login-card{
     background-color: rgba(255, 255, 255, 0.8);
     padding: 2em;
     border-radius: 1em;
@@ -56,7 +56,7 @@ input{
     background-color: var(--colorPrimario);
 }
 
-.ini{
+.titulo{
    font-size: 24px;
    margin: 20px 0;
    color: var(--colorSombras);
@@ -64,7 +64,7 @@ input{
 
 .boton{
     width: 100%;
-    background-color: var(--colorFondo);
+    background-color: var(--colorPrimario);
     color: #000000;
     border: none;
     padding: 10px 20px;
@@ -77,5 +77,5 @@ input{
 .boton:hover{
     background-color: var(--colorSombras);
     color: #fff;
-    transition: 0.3s ease;
+    transition: 0.4s ease;
 }
