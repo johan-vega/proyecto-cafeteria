@@ -5,9 +5,9 @@
     --colorSombras: #A87D5B;
     --colorTitulos: #D97652;
     --ColorParrafos: #403B39;
-    --colorFondo: #EFE0BF;
+    --colorFondo: #ffffff;
     --colorBordes: #8C7549;
-    --colorLetras: #ffffff;
+    --colorLetras: #EFE0BF;
     --zIndexNormal: 1;
     --zIndexToolTip: 10;
     --zIndexFixed: 100;
@@ -27,7 +27,20 @@ body {
     font-family: Arial, sans-serif;
     background: var(--colorFondo);
     display: flex;
+    flex-direction: column;
 }
+
+.navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: var(--colorTerciario);
+    z-index: 1000;
+
+    /* Asegura que esté sobre el main */
+}
+
+
 
 /* Sidebar */
 .sidebar {
@@ -54,7 +67,7 @@ body {
 
 /* Main */
 .main {
-    flex: 1;
+    margin-top: 10px;
     padding: 20px;
 }
 
@@ -116,7 +129,7 @@ body {
     font-family: 'saira stencil';
     font-size: 18px;
     margin-bottom: 10px;
-    color: white;
+    color: var(--colorTitulos);
 }
 
 .subtitulo {
