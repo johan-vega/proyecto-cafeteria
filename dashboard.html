@@ -31,80 +31,122 @@
 </head>
 
 <body>
-    <div class="sidebar">
-        <h3 class="titulo">Dashboard</h3>
-        <ul class="titulo">
-            <li>Dashboard</li>
-            <li>Productos</li>
-            <li>Ordenes</li>
-            <li>Delivery</li>
-            <li>Personal</li>
-            <li>Stadisticas</li>
-            <li>Mensajes</li>
-            <li>Calendario</li>
-            <li>Ajustes</li>
-            <li>Cerrar Seción</li>
-        </ul>
-    </div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="img/logosinfondo.PNG" alt="Logo" width="100" height="80"
+                    class="d-inline-block align-text-top"></a>
+            <a class="navbar-brand text-white" href="#">Inicio</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" aria-current="page" href="#">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Ordenes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Delivery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Trabajadores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white " href="#">Estadisticas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Mensajes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Calendario</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Ajustes
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Configuración</a></li>
+                            <li><a class="dropdown-item" href="#">Editar Perfil</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#"></a>Soporte</li>
+                        </ul>
+                    </li>
 
-    <div class="main">
-        <div class="header">
-            <h2>Star Coffee</h2>
-            <input type="text" placeholder="Search">
-        </div>
-
-        <div class="grid">
-            <div class="card small">
-                <h4 class="titulo">Productos</h4>
-                <div class="list subtitulo">
-                    <div><span>Coffee</span><span>s/7.00</span></div>
-                    <div><span>Postres</span><span>s/15.00</span></div>
-                    <div><span>Merchandising</span><span>s/20.00</span></div>
-                </div>
-            </div>
-
-            <div class="card small">
-                <h4 class="titulo">Ultimas Ordenes</h4>
-                <div class="list subtitulo">
-                    <div>Julia Garcia</div>
-                    <div>Jose Alcantara</div>
-                    <div>Sandro Alejandro</div>
-                </div>
-            </div>
-
-            <div class="card small">
-                <h4 class="titulo">Delivery</h4>
-                <div class="list subtitulo">
-                    <div>Los Proceres</div>
-                    <div>Los Olivos</div>
-                    <div>ZMiraflores</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="bottom">
-            <div class="card">
-                <h4 class="titulo">Stadisticas</h4>
-                <p class="subtitulo">Gráfico</p>
-            </div>
-
-            <div class="card">
-                <h4 class="titulo">Personal</h4>
-                <div class="list subtitulo">
-                    <div>Barista</div>
-                    <div>Gerente</div>
-                    <div>Marketing</div>
-                </div>
-            </div>
-
-            <div class="card">
-                <h4 class="titulo">Mensajes</h4>
-
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" />
+                    <button class="btn btn-outline-success text-white" type="submit">Buscar</button>
+                </form>
             </div>
         </div>
-    </div>
+    </nav>
+
+    <main>
+
+        <div class="main">
 
 
+            <div class=" productos grid">
+                <div class="card small">
+                    <h4 class="titulo">Productos</h4>
+                    <div class="list subtitulo">
+                        <div><span>Coffee</span><span>s/7.00</span></div>
+                        <div><span>Postres</span><span>s/15.00</span></div>
+                        <div><span>Merchandising</span><span>s/20.00</span></div>
+                    </div>
+                </div>
+
+                <div class="Pedidos card small">
+                    <h4 class="titulo">Ultimas Ordenes</h4>
+                    <div class="list subtitulo">
+                        <div>Julia Garcia</div>
+                        <div>Jose Alcantara</div>
+                        <div>Sandro Alejandro</div>
+                    </div>
+                </div>
+
+                <div class="Delivery card small">
+                    <h4 class="titulo">Delivery</h4>
+                    <div class="list subtitulo">
+                        <div>Los Proceres</div>
+                        <div>Los Olivos</div>
+                        <div>ZMiraflores</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="Estadisticas bottom">
+                <div class="card">
+                    <h4 class="titulo">Estadísticas</h4>
+                    <p class="subtitulo">Gráfico</p>
+                </div>
+
+                <div class="Trabajadores card">
+                    <h4 class="titulo">Personal</h4>
+                    <div class="list subtitulo">
+                        <div>Barista</div>
+                        <div>Gerente</div>
+                        <div>Marketing</div>
+                    </div>
+                </div>
+
+                <div class="Mensajes card">
+                    <h4 class="titulo">Mensajes</h4>
+
+                </div>
+            </div>
+        </div>
+
+
+    </main>
 
     <!-- LIBRERIA SWEETALERT -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
