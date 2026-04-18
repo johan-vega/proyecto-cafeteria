@@ -24,8 +24,8 @@
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: var(--colorFondo);
+    font-family: 'SAIRA STENCIL';
+    background-color: var(--colorFondo);
     display: flex;
     flex-direction: column;
 }
