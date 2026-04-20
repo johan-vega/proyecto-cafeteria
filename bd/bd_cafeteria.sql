@@ -115,3 +115,10 @@ VALUES
 ('Café Americano', 50, 'CAT01', 7),
 ('Capuccino', 40, 'CAT01', 10),
 ('Postre Chocolate', 20, 'CAT02', 15);
+
+INSERT INTO PRODUCTO (NOMBRE_PRODUCTO, STOCK, ID_CATEGORIA, PRECIO)
+VALUES 
+('Latte', 50, 'CAT01', 10),
+('Espresso', 40, 'CAT01', 6),
+('Tiramisu', 20, 'CAT02', 16);
+
