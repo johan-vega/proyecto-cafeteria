@@ -2,31 +2,39 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-// CONEXIÓN A TU BD (usa los mismos datos que ya tienes)
 $host = "localhost";
 $db = "bd_cafeteria";
 $user = "root";
 $pass = "";
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
+    $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
 } catch (PDOException $e) {
-    echo json_encode(["error" => "Error de conexión"]);
+    http_response_code(500);
+    echo json_encode(["error" => "No se pudo conectar con la base de datos."]);
     exit;
 }
 
-// CONSULTA PRODUCTOS
 try {
-    $sql = "SELECT ID_PRODUCTO, NOMBRE_PRODUCTO, PRECIO FROM PRODUCTO";
-    $stmt = $pdo->query($sql);
+    $sql = "
+        SELECT
+            p.ID_PRODUCTO AS id_producto,
+            p.NOMBRE_PRODUCTO AS nombre_producto,
+            p.STOCK AS stock,
+            p.PRECIO AS precio,
+            c.ID_CATEGORIA AS id_categoria,
+            c.NOM_CATEGORIA AS nombre_categoria
+        FROM PRODUCTO p
+        INNER JOIN CATEGORIA c ON c.ID_CATEGORIA = p.ID_CATEGORIA
+        ORDER BY c.NOM_CATEGORIA ASC, p.NOMBRE_PRODUCTO ASC
+    ";
 
+    $stmt = $pdo->query($sql);
     $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    echo json_encode($productos);
-
+    echo json_encode($productos, JSON_UNESCAPED_UNICODE);
 } catch (PDOException $e) {
-    echo json_encode(["error" => "Error al obtener productos"]);
+    http_response_code(500);
+    echo json_encode(["error" => "No se pudieron obtener los productos."]);
 }
-?>

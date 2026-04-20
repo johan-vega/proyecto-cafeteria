@@ -1,58 +1,76 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Star Coffe</title>
-    <!-- Framework de booTstrap -->
+    <title>Star Coffee POS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <!-- LIBRERIA DE ICONOS -->
     <script src="https://kit.fontawesome.com/812c8ee19a.js" crossorigin="anonymous"></script>
-    <!-- FAVICON DE LA APLICACION DE MATRICULA -->
     <link rel="shortcut icon" href="img/starcoffee.jpeg" type="image/x-icon">
-    <!-- FUENTES SAIRA STENCIL -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Saira+Stencil:ital,wght@0,100..900;1,100..900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Saira+Stencil+One&display=swap"
         rel="stylesheet">
-    <!-- FUENTES SMOOCH SANS -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Saira+Stencil:ital,wght@0,100..900;1,100..900&family=Smooch+Sans:wght@100..900&display=swap"
-        rel="stylesheet">
-
-    <!-- HOJA DE ESTILOS -->
     <link rel="stylesheet" href="css/dashboard.css">
-    <!-- LIBRERIA JQUERY -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 
 <body>
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
     <div class="app-shell">
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-brand">
                 <img src="img/logosinfondo.PNG" alt="Logo Star Coffee">
                 <div>
-                    <p class="brand-eyebrow">Punto de venta</p>
+                    <p class="brand-eyebrow">Sistema de ventas</p>
                     <h1>Star Coffee</h1>
                 </div>
             </div>
 
-            <nav class="sidebar-nav">
-                <a class="sidebar-link active" href="#"><i class="fa-solid fa-mug-hot"></i><span>Inicio</span></a>
-                <a class="sidebar-link" href="#"><i class="fa-solid fa-receipt"></i><span>Nuevo pedido</span></a>
-                <a class="sidebar-link" href="#"><i class="fa-solid fa-motorcycle"></i><span>Historial de
-                        Ventas</span></a>
-                <a class="sidebar-link" href="#"><i class="fa-solid fa-users"></i><span>Inventario</span></a>
-                <a class="sidebar-link" href="#"><i class="fa-solid fa-chart-line"></i><span>Estadísticas</span></a>
-                <a class="sidebar-link" href="#"><i class="fa-solid fa-gear"></i><span>Ajustes</span></a>
-            </nav>
+            <ul class="sidebar-nav">
+                <li>
+                    <button class="sidebar-link" type="button" data-module="moduloInicio">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Inicio</span>
+                    </button>
+                </li>
+                <li class="active">
+                    <button class="sidebar-link" type="button" data-module="moduloPedido">
+                        <i class="fa-solid fa-cash-register"></i>
+                        <span>Nuevo pedido</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="sidebar-link" type="button" data-module="moduloHistorial">
+                        <i class="fa-solid fa-receipt"></i>
+                        <span>Historial</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="sidebar-link" type="button" data-module="moduloInventario">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                        <span>Inventario</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="sidebar-link" type="button" data-module="moduloEstadisticas">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Estadisticas</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="sidebar-link" type="button" data-module="moduloAjustes">
+                        <i class="fa-solid fa-gear"></i>
+                        <span>Ajustes</span>
+                    </button>
+                </li>
+            </ul>
 
             <div class="sidebar-card">
                 <p class="sidebar-card-label">Turno activo</p>
                 <strong>08:00 AM - 06:00 PM</strong>
-                <span>4 baristas conectados</span>
+                <span>Mostrador y delivery en linea</span>
             </div>
         </aside>
 
@@ -67,123 +85,271 @@
                     <small>POS Cafeteria</small>
                 </div>
             </div>
-            <div id="moduloInicio">
-                <header class="content-header">
-                    <div>
-                        <p class="header-kicker">Panel de cafeteria</p>
-                        <h2>Control de ventas e inventario</h2>
+
+            <section id="moduloInicio" class="module">
+                <header class="hero-panel">
+                    <div class="hero-copy">
+                        <p class="section-kicker">Tablero general</p>
+                        <h2>Un punto de venta listo para atender rapido.</h2>
+                        <p>
+                            Revisa el estado del turno y entra al modulo de pedidos para filtrar productos por
+                            categoria, agregarlos al carrito y simular el pago.
+                        </p>
+                        <button id="btnIrAPedido" class="primary-action" type="button">Abrir punto de venta</button>
                     </div>
 
-                    <form class="search-box" role="search">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="search" placeholder="Buscar pedido, cliente o producto" aria-label="Buscar">
-                    </form>
+                    <div class="hero-stats">
+                        <article class="hero-stat">
+                            <span>Pedidos activos</span>
+                            <strong>18</strong>
+                            <p>7 en preparacion y 11 listos para entregar</p>
+                        </article>
+                        <article class="hero-stat">
+                            <span>Turno actual</span>
+                            <strong>4 baristas</strong>
+                            <p>Caja principal y mostrador trabajando en paralelo</p>
+                        </article>
+                    </div>
                 </header>
 
                 <section class="overview">
                     <article class="overview-card">
-                        <span>Ventas del dia</span>
-                        <strong>S/ 1,280</strong>
-                        <p>18 pedidos completados</p>
+                        <span>Productos cargados</span>
+                        <strong id="inicioCantidadProductos">0</strong>
+                        <p>Sincronizados desde la base de datos.</p>
                     </article>
                     <article class="overview-card">
-                        <span>Ticket promedio</span>
-                        <strong>S/ 24.50</strong>
-                        <p>Subio 8% esta semana</p>
+                        <span>Categorias</span>
+                        <strong id="inicioCantidadCategorias">0</strong>
+                        <p>Listas para filtrar dentro del POS.</p>
                     </article>
                     <article class="overview-card">
-                        <span>Productos agotados</span>
-                        <strong>3 items</strong>
-                        <p>Reponer insumos antes de las 5 PM</p>
+                        <span>Ticket sugerido</span>
+                        <strong id="inicioTicketPromedio">S/ 0.00</strong>
+                        <p>Calculado con el precio promedio del catalogo.</p>
                     </article>
                 </section>
 
-                <div class="main">
-                    <div class="productos grid">
-                        <div class="card small">
-                            <h4 class="titulo">Productos</h4>
-                            <div class="list subtitulo">
-                                <div><span>Coffee</span><span>s/7.00</span></div>
-                                <div><span>Postres</span><span>s/15.00</span></div>
-                                <div><span>Merchandising</span><span>s/20.00</span></div>
+                <section class="preview-grid">
+                    <article class="surface-card">
+                        <div class="card-heading">
+                            <div>
+                                <p class="section-kicker">Vista rapida</p>
+                                <h3>Categorias disponibles</h3>
                             </div>
                         </div>
+                        <div id="previewCategorias" class="preview-stack"></div>
+                    </article>
 
-                        <div class="Pedidos card small">
-                            <h4 class="titulo">Ultimas Ordenes</h4>
-                            <div class="list subtitulo">
-                                <div>Julia Garcia</div>
-                                <div>Jose Alcantara</div>
-                                <div>Sandro Alejandro</div>
+                    <article class="surface-card">
+                        <div class="card-heading">
+                            <div>
+                                <p class="section-kicker">Recomendados</p>
+                                <h3>Productos destacados</h3>
                             </div>
                         </div>
+                        <div id="previewProductos" class="preview-stack"></div>
+                    </article>
+                </section>
+            </section>
 
-                        <div class="Delivery card small">
-                            <h4 class="titulo">Delivery</h4>
-                            <div class="list subtitulo">
-                                <div>Los Proceres</div>
-                                <div>Los Olivos</div>
-                                <div>Miraflores</div>
-                            </div>
-                        </div>
+            <section id="moduloPedido" class="module">
+                <header class="module-header">
+                    <div>
+                        <p class="section-kicker">Nuevo pedido</p>
+                        <h2>Todos los productos</h2>
+                        <p class="module-description">
+                            Filtra por categoria, busca por nombre y agrega productos al carrito.
+                        </p>
                     </div>
 
-                    <div class="Estadisticas bottom">
-                        <div class="card">
-                            <h4 class="titulo">Estadisticas</h4>
-                            <p class="subtitulo">Grafico</p>
-                        </div>
+                    <div class="header-status">
+                        <span class="status-pill">POS activo</span>
+                        <span id="resumenProductos" class="header-meta">Cargando catalogo...</span>
+                    </div>
+                </header>
 
-                        <div class="Trabajadores card">
-                            <h4 class="titulo">Personal</h4>
-                            <div class="list subtitulo">
-                                <div>Barista</div>
-                                <div>Gerente</div>
-                                <div>Marketing</div>
+                <div id="pantallaCatalogo" class="pedido-screen active">
+                    <div class="pedido-layout">
+                        <section class="catalogo-panel surface-card">
+                            <div class="card-heading">
+                                <div>
+                                    <p class="section-kicker">Catalogo</p>
+                                    <h3>Todos los productos</h3>
+                                </div>
+                                <div class="catalogo-search">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <input id="buscadorProductos" type="search"
+                                        placeholder="Buscar cafe, postre o bebida fria">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="Mensajes card">
-                            <h4 class="titulo">Mensajes</h4>
-                        </div>
+                            <div id="listaCategorias" class="category-strip"></div>
+                            <div id="listaProductos" class="products-grid"></div>
+                        </section>
+
+                        <aside class="pedido-sidebar">
+                            <section class="surface-card cart-panel">
+                                <div class="card-heading">
+                                    <div>
+                                        <p class="section-kicker">Carrito</p>
+                                        <h3>Resumen del pedido</h3>
+                                    </div>
+                                    <button id="btnVaciarCarrito" class="ghost-action" type="button">Vaciar</button>
+                                </div>
+
+                                <div id="carrito" class="cart-items"></div>
+
+                                <div class="totals-panel">
+                                    <div>
+                                        <span>Subtotal</span>
+                                        <strong id="subtotalPedido">S/ 0.00</strong>
+                                    </div>
+                                    <div>
+                                        <span>IGV referencial</span>
+                                        <strong id="igvPedido">S/ 0.00</strong>
+                                    </div>
+                                    <div class="total-line">
+                                        <span>Total</span>
+                                        <strong id="totalPedido">S/ 0.00</strong>
+                                    </div>
+                                </div>
+
+                                <button id="btnIrPago" class="primary-action primary-block" type="button">
+                                    Ir a pago
+                                </button>
+                                <p class="helper-text">La pantalla de pago es solo visual para la demostracion.</p>
+                            </section>
+
+                            <section class="surface-card ticket-panel">
+                                <div class="card-heading">
+                                    <div>
+                                        <p class="section-kicker">Atencion</p>
+                                        <h3>Estado del mostrador</h3>
+                                    </div>
+                                </div>
+
+                                <div class="ticket-metric">
+                                    <span>Cafes en cola</span>
+                                    <strong>06</strong>
+                                </div>
+                                <div class="ticket-metric">
+                                    <span>Pedidos listos</span>
+                                    <strong>11</strong>
+                                </div>
+                                <div class="ticket-metric">
+                                    <span>Tiempo promedio</span>
+                                    <strong>08 min</strong>
+                                </div>
+                            </section>
+                        </aside>
                     </div>
                 </div>
-            </div>
 
-            <div id="moduloPedido" style="display:none; padding:20px;">
+                <div id="pantallaPago" class="pedido-screen">
+                    <section class="payment-view surface-card">
+                        <div class="payment-header">
+                            <div>
+                                <p class="section-kicker">Paso final</p>
+                                <h3>Pantalla de pago</h3>
+                                <p>Esta vista es visual y no registra pagos reales.</p>
+                            </div>
+                            <button id="btnVolverCatalogo" class="ghost-action" type="button">Volver al catalogo</button>
+                        </div>
 
-                <h2>Nuevo Pedido</h2>
+                        <div class="payment-grid">
+                            <div class="payment-methods">
+                                <article class="payment-card active">
+                                    <span class="payment-icon"><i class="fa-solid fa-money-bill-wave"></i></span>
+                                    <div>
+                                        <h4>Efectivo</h4>
+                                        <p>Cambio sugerido en caja.</p>
+                                    </div>
+                                </article>
+                                <article class="payment-card">
+                                    <span class="payment-icon"><i class="fa-solid fa-credit-card"></i></span>
+                                    <div>
+                                        <h4>Tarjeta</h4>
+                                        <p>Pago con POS o contacto.</p>
+                                    </div>
+                                </article>
+                                <article class="payment-card">
+                                    <span class="payment-icon"><i class="fa-solid fa-qrcode"></i></span>
+                                    <div>
+                                        <h4>QR / Yape</h4>
+                                        <p>Pago digital para retiro rapido.</p>
+                                    </div>
+                                </article>
+                            </div>
 
-                <div class="row">
+                            <div class="payment-summary">
+                                <div class="summary-amount">
+                                    <span>Total a cobrar</span>
+                                    <strong id="checkoutTotal">S/ 0.00</strong>
+                                </div>
 
-                    <div class="col-md-8">
-                        <h4>Productos</h4>
-                        <div id="listaProductos" class="row"></div>
-                    </div>
+                                <div class="payment-meta">
+                                    <div>
+                                        <span>Cliente</span>
+                                        <strong>Consumidor final</strong>
+                                    </div>
+                                    <div>
+                                        <span>Comprobante</span>
+                                        <strong>Boleta referencial</strong>
+                                    </div>
+                                    <div>
+                                        <span>Orden</span>
+                                        <strong id="checkoutCantidad">0 productos</strong>
+                                    </div>
+                                </div>
 
-                    <div class="col-md-4">
-                        <h4>Carrito</h4>
-                        <ul id="carrito" class="list-group mb-3"></ul>
+                                <div id="checkoutItems" class="checkout-items"></div>
 
-                        <h5>Total: S/ <span id="total">0</span></h5>
-
-                        <button id="btnGuardarPedido" class="btn btn-success w-100">
-                            Guardar Pedido
-                        </button>
-                    </div>
-
+                                <button id="btnSimularPago" class="primary-action primary-block" type="button">
+                                    Confirmar pago visual
+                                </button>
+                            </div>
+                        </div>
+                    </section>
                 </div>
+            </section>
 
-            </div>
+            <section id="moduloHistorial" class="module module-placeholder">
+                <div class="surface-card placeholder-card">
+                    <p class="section-kicker">Proximamente</p>
+                    <h3>Historial de ventas</h3>
+                    <p>Este modulo queda listo para conectar pedidos reales cuando quieras continuar.</p>
+                </div>
+            </section>
 
+            <section id="moduloInventario" class="module module-placeholder">
+                <div class="surface-card placeholder-card">
+                    <p class="section-kicker">Proximamente</p>
+                    <h3>Inventario</h3>
+                    <p>Aqui podras controlar stock, alertas de reposicion y proveedores.</p>
+                </div>
+            </section>
+
+            <section id="moduloEstadisticas" class="module module-placeholder">
+                <div class="surface-card placeholder-card">
+                    <p class="section-kicker">Proximamente</p>
+                    <h3>Estadisticas</h3>
+                    <p>La vista ya esta preparada para sumar graficos y reportes del negocio.</p>
+                </div>
+            </section>
+
+            <section id="moduloAjustes" class="module module-placeholder">
+                <div class="surface-card placeholder-card">
+                    <p class="section-kicker">Proximamente</p>
+                    <h3>Ajustes</h3>
+                    <p>Configuracion de caja, impresora, usuarios y personalizacion de la tienda.</p>
+                </div>
+            </section>
         </main>
     </div>
 
-    <!-- LIBRERIA SWEETALERT -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="js/dashboard.js"></script>
-    <script src="js/pedidos.js"></script>
-    <!-- LIBRERIA JS DE BOOTSTRAP -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
