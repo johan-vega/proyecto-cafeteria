@@ -26,9 +26,9 @@ try {
     // Consulta del usuario administrador activo.
     $stmt = $pdo->prepare(
         "SELECT id, username, password_hash, estado
-         FROM usuario
-         WHERE username = :usuario
-         LIMIT 1"
+        FROM usuario
+        WHERE username = :usuario
+        LIMIT 1"
     );
     $stmt->bindValue(':usuario', $usuarioIngresado, PDO::PARAM_STR);
     $stmt->execute();
