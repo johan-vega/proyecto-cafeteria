@@ -207,6 +207,14 @@ function mostrarModulo(moduloId) {
     if (moduloId === "moduloPedido") {
         cambiarPantallaPedido("catalogo");
     }
+
+    if (moduloId === "moduloEstadisticas") { // Cargar gráficos al mostrar el módulo de estadísticas
+    setTimeout(() => {
+        cargarGrafico();
+        cargarGraficoCategorias();
+        cargarGraficoTop();
+    }, 100);
+}
 }
 
 function cambiarPantallaPedido(pantalla) {
