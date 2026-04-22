@@ -1,5 +1,5 @@
 <?php
-// Endpoint base de la sección Inicio.
+
 // Aquí podremos reunir métricas generales del dashboard.
 session_start();
 header('Content-Type: application/json; charset=UTF-8');

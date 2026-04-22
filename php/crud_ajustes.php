@@ -1,5 +1,5 @@
 <?php
-// Endpoint de la sección Ajustes.
+
 // Guarda datos del local, año activo y cambio de contraseña del administrador.
 session_start();
 header('Content-Type: application/json; charset=UTF-8');
