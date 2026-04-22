@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -322,20 +322,99 @@
                 </div>
             </section>
 
-            <section id="moduloInventario" class="module module-placeholder">
-                <div class="surface-card placeholder-card">
-                    <p class="section-kicker">Proximamente</p>
-                    <h3>Inventario</h3>
-                    <p>Aqui podras controlar stock, alertas de reposicion y proveedores.</p>
-                </div>
+            <section id="moduloInventario" class="module active">
+                <header class="module-header">
+                    <div>
+                        <p class="section-kicker">Inventario</p>
+                        <h2>Control de stock</h2>
+                        <p class="module-description">
+                            Gestiona productos, niveles de stock y alertas de reposición.
+                        </p>
+                    </div>
+                </header>
+
+                <section class="overview">
+                    <article class="overview-card">
+                        <span>Total productos</span>
+                        <strong id="invTotal">0</strong>
+                    </article>
+                    <article class="overview-card">
+                        <span>Stock bajo</span>
+                        <strong id="invBajo">0</strong>
+                    </article>
+                    <article class="overview-card">
+                        <span>Agotados</span>
+                        <strong id="invAgotado">0</strong>
+                    </article>
+                </section>
+
+                <section class="surface-card">
+                    <div class="card-heading">
+                        <h3>Lista de productos</h3>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Stock</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaInventario"></tbody>
+                    </table>
+                </section>
             </section>
 
-            <section id="moduloEstadisticas" class="module module-placeholder">
-                <div class="surface-card placeholder-card">
-                    <p class="section-kicker">Proximamente</p>
-                    <h3>Estadisticas</h3>
-                    <p>La vista ya esta preparada para sumar graficos y reportes del negocio.</p>
+            <section id="moduloEstadisticas" class="module">
+
+            <!-- TARJETAS -->
+            <section class="overview">
+                    <article class="overview-card">
+                        <span>Ventas hoy</span>
+                        <strong id="ventasHoy">S/ 0.00</strong>
+                    </article>
+
+                    <article class="overview-card">
+                        <span>Total pedidos</span>
+                        <strong id="totalPedidos">0</strong>
+                    </article>
+
+                    <article class="overview-card">
+                        <span>Producto más vendido</span>
+                        <strong id="topProducto">-</strong>
+                    </article>
+
+                    <article class="overview-card">
+                        <span>Ingreso total</span>
+                        <strong id="ingresoTotal">S/ 0.00</strong>
+                    </article>
+                </section>
+
+                <!-- GRÁFICO 1 -->
+                <div class="surface-card">
+                    <h3>Ventas por día</h3>
+                    <div style="height:300px;">
+                        <canvas id="graficoVentas"></canvas>
+                    </div>
                 </div>
+
+                <!-- GRÁFICO 2 -->
+                <div class="surface-card">
+                    <h3>Ventas por categoría</h3>
+                    <div style="height:300px;">
+                        <canvas id="graficoCategorias"></canvas>
+                    </div>
+                </div>
+
+                <!-- GRÁFICO 3 -->
+                <div class="surface-card">
+                    <h3>Top productos</h3>
+                    <div style="height:300px;">
+                        <canvas id="graficoTop"></canvas>
+                    </div>
+                </div>
+
             </section>
 
             <section id="moduloAjustes" class="module module-placeholder">
@@ -349,6 +428,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/dashboard.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

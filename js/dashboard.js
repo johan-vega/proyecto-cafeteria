@@ -139,6 +139,14 @@ function mostrarModulo(moduloId) {
     if (moduloId === "moduloPedido") {
         cambiarPantallaPedido("catalogo");
     }
+
+    if (moduloId === "moduloEstadisticas") { // Cargar gráficos al mostrar el módulo de estadísticas
+    setTimeout(() => {
+        cargarGrafico();
+        cargarGraficoCategorias();
+        cargarGraficoTop();
+    }, 100);
+}
 }
 
 function cambiarPantallaPedido(pantalla) {
@@ -192,6 +200,7 @@ async function cargarProductos() {
         renderProductos();
         renderCarrito();
         renderInicio();
+        renderInventario();  //Renderizar inventario al cargar productos
     } catch (error) {
         if (listaProductos) {
             listaProductos.innerHTML = '<div class="empty-state error-state">No se pudieron cargar los productos.</div>';
@@ -532,4 +541,125 @@ function formatCurrency(value) {
         currency: "PEN",
         minimumFractionDigits: 2
     }).format(value || 0);
+}
+
+/*inventario*/
+
+function renderInventario() {
+    const tabla = document.getElementById("tablaInventario");
+    const total = document.getElementById("invTotal");
+    const bajo = document.getElementById("invBajo");
+    const agotado = document.getElementById("invAgotado");
+
+    if (!tabla) return;
+
+    let countBajo = 0;
+    let countAgotado = 0;
+
+    tabla.innerHTML = state.productos.map(p => {
+        let estado = "OK";
+        let color = "green";
+
+        if (p.stock <= 5 && p.stock > 0) {
+            estado = "BAJO";
+            color = "orange";
+            countBajo++;
+        }
+
+        if (p.stock === 0) {
+            estado = "AGOTADO";
+            color = "red";
+            countAgotado++;
+        }
+
+        return `
+            <tr>
+                <td>${p.nombre}</td>
+                <td>${p.stock}</td>
+                <td style="color:${color}; font-weight:bold;">${estado}</td>
+            </tr>
+        `;
+    }).join("");
+
+    total.textContent = state.productos.length;
+    bajo.textContent = countBajo;
+    agotado.textContent = countAgotado;
+}
+
+//estadisticas
+
+let grafico = null; // <-- IMPORTANTE
+let graficoCategorias = null;
+let graficoTop = null;
+
+function cargarGrafico() {
+
+    const canvas = document.getElementById("graficoVentas");
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    // destruir gráfico anterior si existe
+    if (grafico) {
+        grafico.destroy();
+    }
+
+    grafico = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"],
+            datasets: [{
+                label: "Ventas (S/)",
+                data: [50, 80, 65, 90, 120],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+}
+
+function cargarGraficoCategorias() {
+    const canvas = document.getElementById("graficoCategorias");
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    new Chart(ctx, {
+        type: "doughnut",
+        data: {
+            labels: ["Café", "Postres", "Bebidas"],
+            datasets: [{
+                data: [120, 90, 60]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+}
+
+function cargarGraficoTop() {
+    const canvas = document.getElementById("graficoTop");
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: ["Latte", "Capuccino", "Brownie"],
+            datasets: [{
+                label: "Ventas",
+                data: [50, 40, 30]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
 }
