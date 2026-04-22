@@ -341,9 +341,24 @@ ul {
     gap: 20px;
 }
 
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
 .preview-stack {
     display: grid;
     gap: 14px;
+}
+
+.chart-surface {
+    min-height: 460px;
+}
+
+.chart-wrap {
+    position: relative;
+    min-height: 340px;
 }
 
 .preview-item,
@@ -619,11 +634,17 @@ ul {
     border-radius: 22px;
     border: 1px solid rgba(121, 82, 61, 0.14);
     background: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 
 .payment-card.active {
     border-color: rgba(47, 125, 97, 0.35);
     background: linear-gradient(135deg, rgba(233, 248, 238, 0.92), rgba(255, 255, 255, 0.92));
+}
+
+.payment-card:hover {
+    transform: translateY(-2px);
 }
 
 .payment-icon {
@@ -688,6 +709,135 @@ ul {
     padding: 42px 28px;
 }
 
+.inventory-card {
+    display: grid;
+    gap: 18px;
+}
+
+.settings-stack {
+    display: grid;
+    gap: 20px;
+}
+
+.settings-card {
+    display: grid;
+    gap: 18px;
+}
+
+.settings-header {
+    padding: 14px 18px;
+    border-radius: 18px;
+    color: #fffaf5;
+    background: #000000;
+}
+
+.settings-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+.inventory-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.inventory-table th,
+.inventory-table td {
+    padding: 14px 12px;
+    text-align: left;
+    border-bottom: 1px solid rgba(121, 82, 61, 0.12);
+}
+
+.inventory-table th {
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+}
+
+.table-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(41, 25, 20, 0.46);
+    z-index: 60;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-panel {
+    width: min(100%, 720px);
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    box-shadow: var(--shadow-lg);
+    padding: 24px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.modal-form {
+    display: grid;
+    gap: 18px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.form-field {
+    display: grid;
+    gap: 8px;
+}
+
+.form-field label {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.form-field input,
+.form-field select {
+    min-height: 48px;
+    padding: 0 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(121, 82, 61, 0.16);
+    background: rgba(255, 255, 255, 0.82);
+    color: var(--ink-main);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.single-grid {
+    grid-template-columns: 1fr;
+}
+
 @keyframes fadeUp {
     from {
         opacity: 0;
@@ -704,7 +854,8 @@ ul {
     .hero-panel,
     .pedido-layout,
     .payment-grid,
-    .preview-grid {
+    .preview-grid,
+    .charts-grid {
         grid-template-columns: 1fr;
     }
 
@@ -743,7 +894,9 @@ ul {
 
     .module-header,
     .card-heading,
-    .payment-header {
+    .payment-header,
+    .modal-header,
+    .modal-actions {
         flex-direction: column;
         align-items: stretch;
     }
@@ -767,12 +920,17 @@ ul {
     .surface-card,
     .overview-card,
     .payment-summary,
-    .payment-view {
+    .payment-view,
+    .modal-panel {
         padding: 20px;
         border-radius: 22px;
     }
 
     .products-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
         grid-template-columns: 1fr;
     }
 

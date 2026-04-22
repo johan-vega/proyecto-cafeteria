@@ -1,81 +1,270 @@
 :root {
-    --colorPrimario: #D5B795;
-    --colorSecundario: #D5B795;
-    --colorTerciario: #5E5E3C;
-    --colorSombras: #A87D5B;
-    --colorTitulos: #D97652;
-    --ColorParrafos: #403B39;
-    --colorFondo: #EFE0BF;
-    --colorBordes: #8C7549;
-    --zIndexNormal: 1;
-    --zIndexToolTip: 10;
-    --zIndexFixed: 100;
-    --zIndexModal: 1000;
-    --zindexPopUp: 10000;
+    --coffee-900: #2e1b15;
+    --coffee-800: #4a2d23;
+    --coffee-700: #6e4330;
+    --coffee-600: #8c5a3c;
+    --coffee-500: #b97a52;
+    --coffee-300: #e8c9ae;
+    --cream: #fffaf5;
+    --ink: #34241d;
+    --muted: #846a5f;
+    --line: rgba(84, 49, 35, 0.12);
+    --shadow-lg: 0 24px 60px rgba(52, 29, 21, 0.18);
+    --shadow-md: 0 14px 28px rgba(52, 29, 21, 0.12);
 }
 
-/* SELECTOR UNIVERSAL */
 * {
-    padding: 0;
     margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
-
-
 body {
-    background-image: url('../img/pexels-jayoke-851555.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
+    min-height: 100vh;
+    font-family: "Poppins", sans-serif;
+    color: var(--ink);
+    background:
+        radial-gradient(circle at top left, rgba(255, 221, 188, 0.55), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(185, 122, 82, 0.18), transparent 24%),
+        linear-gradient(135deg, rgba(255, 248, 242, 0.95), rgba(249, 236, 223, 0.92)),
+        url("../img/fondo-login.jpg") center/cover no-repeat fixed;
+    display: grid;
+    place-items: center;
+    padding: 32px 18px;
+}
+
+.login-shell {
+    width: min(100%, 1120px);
+    display: grid;
+    grid-template-columns: minmax(320px, 1fr) minmax(320px, 460px);
+    gap: 28px;
+    align-items: center;
+}
+
+.brand-panel,
+.login-card {
+    border: 1px solid var(--line);
+    backdrop-filter: blur(14px);
+    box-shadow: var(--shadow-lg);
+}
+
+.brand-panel {
+    padding: 38px;
+    border-radius: 32px;
+    color: var(--cream);
+    background:
+        linear-gradient(160deg, rgba(46, 27, 21, 0.94), rgba(110, 67, 48, 0.88)),
+        url("../img/pexels-jayoke-851555.jpg") center/cover;
+    min-height: 560px;
+    display: grid;
+    align-content: space-between;
+}
+
+.brand-copy {
+    display: grid;
+    gap: 18px;
+    max-width: 520px;
+}
+
+.brand-badge,
+.helper-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    padding: 9px 14px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.brand-badge {
+    background: rgba(255, 248, 241, 0.14);
+    border: 1px solid rgba(255, 248, 241, 0.18);
+}
+
+.brand-copy h1 {
+    font-family: "Saira Stencil One", cursive;
+    font-size: clamp(2rem, 4vw, 3.6rem);
+    line-height: 1.05;
+}
+
+.brand-copy p,
+.brand-list li {
+    color: rgba(255, 242, 233, 0.82);
+    line-height: 1.7;
+}
+
+.brand-list {
+    display: grid;
+    gap: 14px;
+    list-style: none;
+}
+
+.brand-list li {
     display: flex;
     align-items: center;
+    gap: 12px;
+}
+
+.brand-list i {
+    width: 36px;
+    height: 36px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
-    height: 100vh;
-    width: 95vh;
-    margin: 2em;
+    background: rgba(255, 248, 241, 0.12);
+}
+
+.brand-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    color: rgba(255, 242, 233, 0.72);
+    font-size: 0.9rem;
 }
 
 .login-card {
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 2em;
-    border-radius: 1em;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 700px;
-
+    background: rgba(255, 251, 246, 0.92);
+    border-radius: 30px;
+    padding: 34px;
 }
 
-input {
+.login-top {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 26px;
+}
+
+.login-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.login-brand img {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+    border-radius: 18px;
+    padding: 8px;
+    background: rgba(185, 122, 82, 0.12);
+}
+
+.login-brand h2 {
+    font-family: "Saira Stencil One", cursive;
+    font-size: 1.45rem;
+}
+
+.login-top p {
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.helper-chip {
+    color: var(--coffee-700);
+    background: rgba(185, 122, 82, 0.1);
+}
+
+.login-form {
+    display: grid;
+    gap: 18px;
+}
+
+.input-group {
+    display: grid;
+    gap: 9px;
+}
+
+.input-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--coffee-800);
+}
+
+.input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 14px;
+    min-height: 56px;
+    border-radius: 18px;
+    border: 1px solid rgba(84, 49, 35, 0.12);
+    background: rgba(255, 255, 255, 0.74);
+}
+
+.input-wrap i {
+    color: var(--muted);
+}
+
+.input-wrap input {
     width: 100%;
-    padding: .8em;
-    margin-bottom: 1em;
-    border-radius: .5em;
-    font-size: 1em;
-    border: 1px solid var(--colorTerciario);
-    background-color: var(--colorPrimario);
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--ink);
+    font-size: 1rem;
 }
 
-.titulo {
-    font-size: 24px;
-    margin: 20px 0;
-    color: var(--colorSombras);
-}
-
-.boton {
-    width: 100%;
-    background-color: var(--colorPrimario);
-    color: #000000;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1em;
-    font-family: 'Poppins';
+.toggle-password {
     cursor: pointer;
-    font-weight: 500;
 }
 
-.boton:hover {
-    background-color: var(--colorSombras);
-    color: #fff;
-    transition: 0.4s ease;
+.submit-btn {
+    min-height: 58px;
+    border: 0;
+    border-radius: 18px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--cream);
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--coffee-500), var(--coffee-700));
+    box-shadow: var(--shadow-md);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+}
+
+.submit-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.login-footer {
+    margin-top: 18px;
+    color: var(--muted);
+    text-align: center;
+    font-size: 0.92rem;
+}
+
+.login-footer span {
+    color: var(--coffee-700);
+    font-weight: 600;
+}
+
+@media (max-width: 920px) {
+    .login-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .brand-panel {
+        min-height: auto;
+    }
+}
+
+@media (max-width: 640px) {
+    body {
+        padding: 18px 12px;
+    }
+
+    .brand-panel,
+    .login-card {
+        padding: 24px 20px;
+        border-radius: 24px;
+    }
 }
