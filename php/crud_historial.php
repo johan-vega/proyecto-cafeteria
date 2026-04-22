@@ -1,5 +1,5 @@
 <?php
-// Endpoint de la sección Historial.
+
 // Lista las ventas registradas y sus detalles.
 session_start();
 header('Content-Type: application/json; charset=UTF-8');
