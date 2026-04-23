@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+$host = 'localhost';
+$db = 'bd_cafeteria';
+$user = 'root';
+$pass = '';
+
 session_start();
 header('Content-Type: application/json; charset=UTF-8');
 
@@ -211,7 +216,9 @@ function validarProducto(PDO $pdo, string $nombre, int $stock, float $precio, st
 function conectarBaseDatos(): PDO
 {
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=bd_cafeteria;charset=utf8mb4', 'root', '');
+        global $host, $db, $user, $pass;
+
+        $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         return $pdo;
