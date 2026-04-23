@@ -1,11 +1,10 @@
 <?php
-// Endpoint de autenticación para el administrador.
 header('Content-Type: application/json; charset=UTF-8');
 
-$host = 'localhost';
-$db = 'bd_cafeteria';
-$user = 'root';
-$pass = '';
+$host = 'sql100.infinityfree.com';
+$db = 'if0_41711637_bd_cafeteria';
+$user = 'if0_41711637';
+$pass = 'xOAWNxbCu1';
 
 try {
     // Conexión a la base de datos para validar credenciales.
@@ -26,7 +25,7 @@ try {
     // Consulta del usuario administrador activo.
     $stmt = $pdo->prepare(
         "SELECT id, username, password_hash, estado
-        FROM usuario
+        FROM USUARIO
         WHERE username = :usuario
         LIMIT 1"
     );

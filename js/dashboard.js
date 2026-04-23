@@ -7,7 +7,6 @@ const state = {
     metodoPagoSeleccionado: "Efectivo",
     historial: [],
     inventarioCategorias: [],
-    inicio: null,
     charts: {
         categorias: null,
         stock: null
@@ -26,26 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
     inicializarAjustes();
     mostrarModulo("moduloPanel");
     cargarProductos();
-    cargarInicio();
     cargarHistorial();
     cargarAjustes();
 });
-
-function obtenerDataRespuesta(data) {
-    if (Array.isArray(data)) {
-        return data;
-    }
-
-    if (data && typeof data === "object" && Object.prototype.hasOwnProperty.call(data, "data")) {
-        return data.data;
-    }
-
-    return data;
-}
-
-function obtenerMensajeRespuesta(data, mensajePorDefecto) {
-    return data?.error || data?.message || data?.mensaje || mensajePorDefecto;
-}
 
 function inicializarSidebar() {
     // Controla apertura y cierre del menú lateral en móvil.
@@ -178,7 +160,7 @@ function inicializarAccionesPedido() {
             }
 
             try {
-                const response = await fetch("php/api_pedidos.php", {
+                const response = await fetch("php/crud_pedidos.php", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json; charset=UTF-8"
@@ -193,15 +175,15 @@ function inicializarAccionesPedido() {
                 });
                 const data = await response.json();
 
-                if (!response.ok || data?.success === false || data?.exito === false) {
-                    throw new Error(obtenerMensajeRespuesta(data, "No se pudo registrar la venta."));
+                if (!response.ok || !data.exito) {
+                    throw new Error(data?.error || "No se pudo registrar la venta.");
                 }
 
                 state.carrito = [];
                 renderCarrito();
                 cambiarPantallaPedido("catalogo");
                 await cargarProductos();
-                await Promise.all([cargarHistorial(), cargarInicio()]);
+                await cargarHistorial();
 
                 Swal.fire(
                     "Venta registrada",
@@ -258,20 +240,19 @@ async function cargarProductos() {
             listaProductos.innerHTML = '<div class="empty-state">Cargando productos desde la base de datos...</div>';
         }
 
-        const response = await fetch("php/api_inventario.php?accion=listar");
+        const response = await fetch("php/crud_inventario.php?accion=listar");
         const data = await response.json();
-        const productos = obtenerDataRespuesta(data);
 
         if (response.status === 401) {
             window.location.href = "index.php";
             return;
         }
 
-        if (!response.ok || !Array.isArray(productos)) {
-            throw new Error(obtenerMensajeRespuesta(data, "No se pudo cargar el catalogo."));
+        if (!response.ok || !Array.isArray(data)) {
+            throw new Error(data?.error || "No se pudo cargar el catalogo.");
         }
 
-        state.productos = productos.map((producto) => ({
+        state.productos = data.map((producto) => ({
             id: Number(producto.id_producto),
             nombre: producto.nombre_producto,
             precio: Number(producto.precio),
@@ -520,15 +501,14 @@ function inicializarInventario() {
 
 async function cargarCategoriasInventario() {
     // Obtiene las categorías disponibles para el formulario de productos.
-    const response = await fetch("php/api_inventario.php?accion=categorias");
+    const response = await fetch("php/crud_inventario.php?accion=categorias");
     const data = await response.json();
-    const categorias = obtenerDataRespuesta(data);
 
-    if (!response.ok || !Array.isArray(categorias)) {
-        throw new Error(obtenerMensajeRespuesta(data, "No se pudieron cargar las categorías."));
+    if (!response.ok) {
+        throw new Error(data?.error || "No se pudieron cargar las categorías.");
     }
 
-    state.inventarioCategorias = categorias;
+    state.inventarioCategorias = data;
     const select = document.getElementById("productoCategoria");
 
     if (!select) {
@@ -547,14 +527,16 @@ async function cargarHistorial() {
     if (!tabla) {
         return;
     }
+
     try {
-        const response = await fetch("php/api_historial.php?accion=listar");
+        const response = await fetch("php/crud_historial.php?accion=listar");
         const data = await response.json();
-        const historial = obtenerDataRespuesta(data);
-        if (!response.ok || !Array.isArray(historial)) {
-            throw new Error(obtenerMensajeRespuesta(data, "No se pudo cargar el historial."));
+
+        if (!response.ok || !Array.isArray(data)) {
+            throw new Error(data?.error || "No se pudo cargar el historial.");
         }
-        state.historial = historial;
+
+        state.historial = data;
         renderTablaHistorial();
     } catch (error) {
         tabla.innerHTML = `
@@ -574,6 +556,7 @@ function renderTablaHistorial() {
     if (!tabla) {
         return;
     }
+
     if (!state.historial.length) {
         tabla.innerHTML = `
             <tr>
@@ -584,19 +567,20 @@ function renderTablaHistorial() {
         `;
         return;
     }
+
     tabla.innerHTML = state.historial
         .map((venta) => {
             const detalle = (venta.detalle || [])
-                .map((item) => `${item.cantidad}x ${item.nombre_producto}`)
+                .map((item) => `${item.CANTIDAD}x ${item.NOMBRE_PRODUCTO}`)
                 .join(", ");
 
             return `
                 <tr>
-                    <td>${venta.id_venta}</td>
-                    <td>${formatDateTime(venta.fecha_venta)}</td>
-                    <td>${venta.metodo_pago}</td>
-                    <td>${venta.cantidad_items}</td>
-                    <td>${formatCurrency(Number(venta.total))}</td>
+                    <td>${venta.ID_VENTA}</td>
+                    <td>${formatDateTime(venta.FECHA_VENTA)}</td>
+                    <td>${venta.METODO_PAGO}</td>
+                    <td>${venta.CANTIDAD_ITEMS}</td>
+                    <td>${formatCurrency(Number(venta.TOTAL))}</td>
                     <td>${detalle || "Sin detalle"}</td>
                 </tr>
             `;
@@ -622,131 +606,107 @@ async function cargarAjustes() {
     }
 
     try {
-        const response = await fetch("php/api_ajuste.php");
+        const response = await fetch("php/crud_ajustes.php?accion=obtener");
         const data = await response.json();
-        const ajustes = obtenerDataRespuesta(data);
 
-        if (!response.ok || !ajustes) {
-            throw new Error(obtenerMensajeRespuesta(data, "No se pudieron cargar los ajustes."));
+        if (!response.ok || !data) {
+            throw new Error(data?.error || "No se pudieron cargar los ajustes.");
         }
 
-        document.getElementById("ajusteNombreLocal").value = ajustes.nombre_local || "";
-        document.getElementById("ajusteCorreoLocal").value = ajustes.correo_local || "";
-        document.getElementById("ajusteDireccionLocal").value = ajustes.direccion_local || "";
-        document.getElementById("ajusteTelefonoLocal").value = ajustes.telefono_local || "";
+        document.getElementById("ajusteNombreLocal").value = data.nombre_local || "";
+        document.getElementById("ajusteCorreoLocal").value = data.correo_local || "";
+        document.getElementById("ajusteDireccionLocal").value = data.direccion_local || "";
+        document.getElementById("ajusteTelefonoLocal").value = data.telefono_local || "";
         if (selectAnio) {
-            selectAnio.value = ajustes.anio_local || "2026";
+            selectAnio.value = data.anio_local || "2026";
         }
     } catch (error) {
         console.error(error);
     }
 }
 
-async function cargarInicio() {
-    try {
-        const response = await fetch("php/api_inicio.php");
-        const data = await response.json();
-        const inicio = obtenerDataRespuesta(data);
-
-        if (!response.ok || !inicio) {
-            throw new Error(obtenerMensajeRespuesta(data, "No se pudo cargar el resumen de inicio."));
-        }
-
-        state.inicio = inicio;
-        renderInicio();
-    } catch (error) {
-        state.inicio = null;
-        renderInicio();
-    }
-}
-
 async function guardarDatosLocal(event) {
+    // Guarda los datos generales del local.
     event.preventDefault();
 
     try {
-        const response = await fetch("php/api_ajuste.php", {
-            method: "PUT",
+        const response = await fetch("php/crud_ajustes.php", {
+            method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
             },
-            body: JSON.stringify({
-                tipo: "local",
-                nombre: document.getElementById("ajusteNombreLocal").value.trim(),
-                correo: document.getElementById("ajusteCorreoLocal").value.trim(),
-                direccion: document.getElementById("ajusteDireccionLocal").value.trim(),
-                telefono: document.getElementById("ajusteTelefonoLocal").value.trim()
-            })
+            body: new URLSearchParams({
+                accion: "guardar_local",
+                nombre_local: document.getElementById("ajusteNombreLocal").value.trim(),
+                correo_local: document.getElementById("ajusteCorreoLocal").value.trim(),
+                direccion_local: document.getElementById("ajusteDireccionLocal").value.trim(),
+                telefono_local: document.getElementById("ajusteTelefonoLocal").value.trim()
+            }).toString()
         });
-
         const data = await response.json();
 
-        if (!response.ok || data?.success === false || data?.exito === false) {
-            throw new Error(obtenerMensajeRespuesta(data, "Error al guardar"));
+        if (!response.ok || !data.exito) {
+            throw new Error(data?.error || "No se pudieron guardar los datos del local.");
         }
 
-        await cargarAjustes();
-        Swal.fire("Correcto", data.message || data.mensaje, "success");
-
+        Swal.fire("Correcto", data.mensaje, "success");
     } catch (error) {
         Swal.fire("Error", error.message, "error");
     }
 }
 
 async function guardarAnioLocal(event) {
+    // Guarda el año activo del local.
     event.preventDefault();
 
     try {
-        const response = await fetch("php/api_ajuste.php", {
-            method: "PUT",
+        const response = await fetch("php/crud_ajustes.php", {
+            method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
             },
-            body: JSON.stringify({
-                tipo: "anio",
-                anio: document.getElementById("ajusteAnioLocal").value
-            })
+            body: new URLSearchParams({
+                accion: "guardar_anio",
+                anio_local: document.getElementById("ajusteAnioLocal").value
+            }).toString()
         });
-
         const data = await response.json();
 
-        if (!response.ok || data?.success === false || data?.exito === false) {
-            throw new Error(obtenerMensajeRespuesta(data, "Error al guardar año"));
+        if (!response.ok || !data.exito) {
+            throw new Error(data?.error || "No se pudo guardar el año activo.");
         }
 
-        await Promise.all([cargarAjustes(), cargarInicio()]);
-        Swal.fire("Correcto", data.message || data.mensaje, "success");
-
+        Swal.fire("Correcto", data.mensaje, "success");
     } catch (error) {
         Swal.fire("Error", error.message, "error");
     }
 }
 
 async function cambiarPasswordAdmin(event) {
+    // Cambia la contraseña del administrador desde Ajustes.
     event.preventDefault();
 
     try {
-        const response = await fetch("php/api_ajuste.php", {
+        const response = await fetch("php/crud_ajustes.php", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
             },
-            body: JSON.stringify({
-                tipo: "password",
-                actual: document.getElementById("passwordActualAdmin").value,
-                nueva: document.getElementById("passwordNuevaAdmin").value,
-                confirmar: document.getElementById("passwordConfirmarAdmin").value
-            })
+            body: new URLSearchParams({
+                accion: "cambiar_password",
+                password_actual: document.getElementById("passwordActualAdmin").value,
+                password_nueva: document.getElementById("passwordNuevaAdmin").value,
+                password_confirmar: document.getElementById("passwordConfirmarAdmin").value
+            }).toString()
         });
-
         const data = await response.json();
 
-        if (!response.ok || data?.success === false || data?.exito === false) {
-            throw new Error(obtenerMensajeRespuesta(data, "Error al cambiar contraseña"));
+        if (!response.ok || !data.exito) {
+            throw new Error(data?.error || "No se pudo cambiar la contraseña.");
         }
 
         document.getElementById("formPasswordAdmin").reset();
-        Swal.fire("Correcto", data.message || data.mensaje, "success");
-
+        Swal.fire("Correcto", data.mensaje, "success");
     } catch (error) {
         Swal.fire("Error", error.message, "error");
     }
@@ -858,7 +818,7 @@ async function guardarProducto(event) {
     });
 
     try {
-        const response = await fetch("php/api_inventario.php", {
+        const response = await fetch("php/crud_inventario.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
@@ -867,13 +827,13 @@ async function guardarProducto(event) {
         });
         const data = await response.json();
 
-        if (!response.ok || data?.success === false || data?.exito === false) {
-            throw new Error(obtenerMensajeRespuesta(data, "No se pudo guardar el producto."));
+        if (!response.ok || !data.exito) {
+            throw new Error(data?.error || data?.mensaje || "No se pudo guardar el producto.");
         }
 
         cerrarModalProducto();
-        await Promise.all([cargarProductos(), cargarInicio()]);
-        Swal.fire("Correcto", data.mensaje || data.message, "success");
+        await cargarProductos();
+        Swal.fire("Correcto", data.mensaje, "success");
     } catch (error) {
         Swal.fire("Error", error.message, "error");
     }
@@ -896,7 +856,7 @@ async function eliminarProducto(productoId) {
     }
 
     try {
-        const response = await fetch("php/api_inventario.php", {
+        const response = await fetch("php/crud_inventario.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
@@ -908,12 +868,12 @@ async function eliminarProducto(productoId) {
         });
         const data = await response.json();
 
-        if (!response.ok || data?.success === false || data?.exito === false) {
-            throw new Error(obtenerMensajeRespuesta(data, "No se pudo eliminar el producto."));
+        if (!response.ok || !data.exito) {
+            throw new Error(data?.error || data?.mensaje || "No se pudo eliminar el producto.");
         }
 
-        await Promise.all([cargarProductos(), cargarInicio()]);
-        Swal.fire("Eliminado", data.mensaje || data.message, "success");
+        await cargarProductos();
+        Swal.fire("Eliminado", data.mensaje, "success");
     } catch (error) {
         Swal.fire("Error", error.message, "error");
     }
@@ -1040,45 +1000,23 @@ function renderInicio() {
     const panelPrecioPromedio = document.getElementById("panelPrecioPromedio");
     const previewCategorias = document.getElementById("previewCategorias");
     const previewProductosInicio = document.getElementById("previewProductosInicio");
-    const resumenInicio = state.inicio;
-    const totalProductos = resumenInicio?.total_productos ?? state.productos.length;
-    const totalCategorias = resumenInicio?.total_categorias ?? state.categorias.length;
     const precioPromedio =
-        Number(
-            resumenInicio?.precio_promedio ??
-            (state.productos.reduce((acc, producto) => acc + producto.precio, 0) / (state.productos.length || 1))
-        );
-    const categoriasInicio = Array.isArray(resumenInicio?.categorias)
-        ? resumenInicio.categorias.map((categoria) => ({
-            nombre: categoria.nombre_categoria,
-            cantidad: Number(categoria.total_productos)
-        }))
-        : state.categorias.map((categoria) => ({
-            nombre: categoria.nombre,
-            cantidad: state.productos.filter((producto) => producto.categoriaId === categoria.id).length
-        }));
-    const productosInicio = Array.isArray(resumenInicio?.productos_destacados)
-        ? resumenInicio.productos_destacados.map((producto) => ({
-            nombre: producto.nombre_producto,
-            categoriaNombre: producto.nombre_categoria,
-            precio: Number(producto.precio)
-        }))
-        : state.productos.slice(0, 3);
+        state.productos.reduce((acc, producto) => acc + producto.precio, 0) / (state.productos.length || 1);
 
     if (cantidadProductos) {
-        cantidadProductos.textContent = totalProductos;
+        cantidadProductos.textContent = state.productos.length;
     }
 
     if (cantidadCategorias) {
-        cantidadCategorias.textContent = totalCategorias;
+        cantidadCategorias.textContent = state.categorias.length;
     }
 
     if (panelCantidadProductos) {
-        panelCantidadProductos.textContent = totalProductos;
+        panelCantidadProductos.textContent = state.productos.length;
     }
 
     if (panelCantidadCategorias) {
-        panelCantidadCategorias.textContent = totalCategorias;
+        panelCantidadCategorias.textContent = state.categorias.length;
     }
 
 
@@ -1087,21 +1025,25 @@ function renderInicio() {
     }
 
     if (previewCategorias) {
-        previewCategorias.innerHTML = categoriasInicio
-            .map((categoria) => `
-                <div class="preview-item">
-                    <div>
-                        <strong>${categoria.nombre}</strong>
-                        <p>${categoria.cantidad} producto(s) en catalogo</p>
+        previewCategorias.innerHTML = state.categorias
+            .map((categoria) => {
+                const cantidad = state.productos.filter((producto) => producto.categoriaId === categoria.id).length;
+                return `
+                    <div class="preview-item">
+                        <div>
+                            <strong>${categoria.nombre}</strong>
+                            <p>${cantidad} producto(s) en catalogo</p>
+                        </div>
+                        <span>${cantidad}</span>
                     </div>
-                    <span>${categoria.cantidad}</span>
-                </div>
-            `)
+                `;
+            })
             .join("");
     }
 
     if (previewProductosInicio) {
-        previewProductosInicio.innerHTML = productosInicio
+        previewProductosInicio.innerHTML = state.productos
+            .slice(0, 3)
             .map((producto) => `
                 <div class="preview-item">
                     <div>
