@@ -1,5 +1,4 @@
 <?php
-// Endpoint CRUD de la sección Inventario.
 // Atiende el catálogo del POS y la tabla administrativa de productos.
 session_start();
 header('Content-Type: application/json; charset=UTF-8');
@@ -11,10 +10,10 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'admin') {
     exit;
 }
 
-$host = 'localhost';
-$db = 'bd_cafeteria';
-$user = 'root';
-$pass = '';
+$host = 'sql100.infinityfree.com';
+$db = 'if0_41711637_bd_cafeteria';
+$user = 'if0_41711637';
+$pass = 'xOAWNxbCu1';
 
 try {
     // Conexión a la base de datos usada por inventario.
