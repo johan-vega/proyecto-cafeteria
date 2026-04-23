@@ -12,6 +12,7 @@ header('Expires: Sat, 01 Jan 2000 00:00:00 GMT');
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,6 +25,7 @@ header('Expires: Sat, 01 Jan 2000 00:00:00 GMT');
     <link rel="stylesheet" href="css/dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
@@ -578,4 +580,5 @@ header('Expires: Sat, 01 Jan 2000 00:00:00 GMT');
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 </body>
+
 </html>
