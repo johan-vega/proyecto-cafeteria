@@ -16,7 +16,7 @@ header('Expires: Sat, 01 Jan 2000 00:00:00 GMT');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Star Coffee | Acceso Administrador</title>
-    <link rel="shortcut icon" href="img/starcoffee.jpeg" type="image/x-icon">
+    <link rel="shortcut icon" href="img/sinfondocoffee.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Saira+Stencil+One&display=swap" rel="stylesheet">
