@@ -146,3 +146,18 @@ INSERT INTO PEDIDOS (FECHA, TOTAL) VALUES
 ('2026-04-21', 200),
 ('2026-04-22', 170);
 
+INSERT INTO PRODUCTO (NOMBRE_PRODUCTO, STOCK, ID_CATEGORIA, PRECIO)
+VALUES 
+
+('Infusiones', 20, 'CAT01', 10),
+('Carrot cake', 20, 'CAT02', 14),
+('Brownie', 20, 'CAT02', 8),
+('Alfajor', 20, 'CAT02', 8),
+('Pudin de Chia', 20, 'CAT02', 10),
+('Crox de pistacho', 20, 'CAT02', 19),
+('Prensa francesa', 20, 'CAT03', 14),
+('Fretta', 20, 'CAT03', 14),
+('Mixto', 20, 'CAT04', 12),
+('cake naranja', 20, 'CAT04', 13);
+
+
